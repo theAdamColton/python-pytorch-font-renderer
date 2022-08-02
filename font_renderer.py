@@ -22,7 +22,7 @@ class FontRenderer:
         string_tensor: A batchsize x height x width integer tensor, where each
         'pixel' represents the character index, from 0 to 94
         """
-        if len(string_tensor) > 3 and string_tensor.shape[1] == 95:
+        if len(string_tensor.shape) > 3 and string_tensor.shape[1] == 95:
             string_tensor = string_tensor.argmax(dim=1)
         batchsize: int = string_tensor.shape[0]
         width: int = string_tensor.shape[1]
