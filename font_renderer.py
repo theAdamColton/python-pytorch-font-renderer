@@ -5,11 +5,10 @@ import font_characters
 
 
 class FontRenderer:
-    """
-    res: resolution of each character in the output image
-    """
-
     def __init__(self, res: int = 32, device=torch.device("cpu"), zoom=20):
+        """
+        res: resolution of each character in the output image
+        """
         font_images_path = os.path.join(os.path.dirname(__file__), "font_images/")
         self.font_characters = font_characters.load_font_characters(
             font_images_path, res=res, zoom=zoom
@@ -25,6 +24,9 @@ class FontRenderer:
         Alternatively, string_tensor can be a batchsize x 95 x height x width,
         where each pixel is a one hot encoded vector.
         """
+        if len(string_tensor.shape) > 3:
+            assert string_tensor.shape[1] == 95
+            string_tensor = string_tensor.argmax(dim=1)
         batchsize: int = string_tensor.shape[0]
         width: int = string_tensor.shape[1]
         height: int = string_tensor.shape[2]
