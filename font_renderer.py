@@ -15,6 +15,7 @@ class FontRenderer:
         )
         self.font_res = res
         self.font_characters = self.font_characters.to(device)
+        self.zoom = zoom
 
     def render(self, string_tensor: torch.Tensor):
         """
